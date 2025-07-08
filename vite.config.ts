@@ -108,8 +108,7 @@ export default defineConfig(({ mode }) => ({
           ],
           'menu-components': [
             './src/components/HamburgerMenuPage.tsx',
-            './src/components/GardenOfGrowth.tsx',
-            './src/components/Skills.tsx'
+            './src/components/GardenOfGrowth.tsx'
           ]
         }
       }
