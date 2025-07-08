@@ -222,41 +222,6 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       </div>
 
       {/* Garden Status Preview (if planted) */}
-      {gameState.gardenOfGrowth?.isPlanted && (
-        <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 p-4 sm:p-6 rounded-lg border border-green-500/30">
-              <p className="text-white text-lg sm:text-xl font-bold">{gameState.zone || 1}</p>
-            <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
-            <h3 className="text-green-400 font-bold text-base sm:text-lg">🌱 Your Garden</h3>
-          </div>
-              <p className="text-white text-lg sm:text-xl font-bold">{gameState.progression?.level || 1}</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            <div className="text-center">
-              <p className="text-green-300 font-semibold text-sm">Growth</p>
-              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth?.growthCm?.toFixed(1) || 0}cm</p>
-                {Math.round(((gameState.statistics?.correctAnswers || 0) / Math.max(gameState.statistics?.totalQuestionsAnswered || 1, 1)) * 100)}%
-            <div className="text-center">
-              <p className="text-blue-300 font-semibold text-sm">Stat Bonus</p>
-              <p className="text-white text-lg sm:text-xl font-bold">+{gameState.gardenOfGrowth?.totalGrowthBonus?.toFixed(1) || 0}%</p>
-            </div>
-            <div className="text-center">
-                {gameState.achievements?.filter(a => a.unlocked)?.length || 0}/{gameState.achievements?.length || 0}
-              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth?.waterHoursRemaining?.toFixed(1) || 0}h</p>
-            </div>
-          </div>
-          
-          <div className="mt-4">
-            <div className="w-full bg-gray-700 rounded-full h-3">
-              <div 
-                className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all duration-500"
-                style={{ width: `${Math.min(((gameState.gardenOfGrowth?.growthCm || 0) / (gameState.gardenOfGrowth?.maxGrowthCm || 100)) * 100, 100)}%` }}
-              />
-            </div>
-            <p className="text-center text-gray-300 text-xs sm:text-sm mt-2">
-              Progress to maximum growth ({gameState.gardenOfGrowth?.maxGrowthCm || 100}cm)
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Quick Stats Summary */}
       <div className="bg-black/30 p-4 sm:p-6 rounded-lg border border-gray-600/50">

@@ -88,6 +88,7 @@ function App() {
     skipAdventureSkills,
     spendFragments,
     selectMerchantReward,
+    useSkipCard,
   } = useGameState();
 
   const [currentView, setCurrentView] = useState<GameView>('stats');
