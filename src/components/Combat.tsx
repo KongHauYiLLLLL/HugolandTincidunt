@@ -64,7 +64,7 @@ export const Combat: React.FC<CombatProps> = ({
   let questionTime = (gameMode.current === 'blitz' || gameMode.current === 'bloodlust') ? 5 : 8;
   
   // Apply time slow effect
-  if (adventureSkills?.skillEffects.timeSlowActive) {
+  if (adventureSkills?.skillEffects?.timeSlowActive) {
     questionTime = Math.floor(questionTime * 1.5);
   }
 
@@ -72,7 +72,7 @@ export const Combat: React.FC<CombatProps> = ({
     let question = getQuestionByZone(enemy.zone);
     
     // Apply truth and lies skill effect
-    if (adventureSkills?.skillEffects.truthLiesActive && question.type === 'multiple-choice' && question.options) {
+    if (adventureSkills?.skillEffects?.truthLiesActive && question.type === 'multiple-choice' && question.options) {
       const correctIndex = question.correctAnswer as number;
       const wrongIndices = question.options.map((_, index) => index).filter(i => i !== correctIndex);
       const indexToRemove = wrongIndices[Math.floor(Math.random() * wrongIndices.length)];
@@ -402,7 +402,7 @@ export const Combat: React.FC<CombatProps> = ({
           {renderQuestionInput()}
 
           {/* Skip Card Button */}
-          {adventureSkills?.selectedSkill?.type === 'skip_card' && !adventureSkills.skillEffects.skipCardUsed && (
+          {adventureSkills?.selectedSkill?.type === 'skip_card' && !adventureSkills?.skillEffects?.skipCardUsed && (
             <div className="mt-4">
               <button
                 onClick={handleSkipCard}
@@ -473,7 +473,7 @@ export const Combat: React.FC<CombatProps> = ({
           {adventureSkills?.selectedSkill && (
             <span className="text-purple-300 flex items-center gap-2 bg-purple-900/30 px-3 py-1 rounded-lg">
               <Zap className="w-4 h-4" />
-              {adventureSkills.selectedSkill.name}
+              {adventureSkills?.selectedSkill?.name}
             </span>
           )}
         </div>

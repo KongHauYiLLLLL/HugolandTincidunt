@@ -59,7 +59,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       bgColor: 'from-indigo-900/50 to-purple-900/50',
       borderColor: 'border-indigo-500/50',
       description: 'Ancient relics and artifacts',
-      status: `${gameState.yojefMarket.items.length} relics available`
+      status: `${gameState.yojefMarket?.items?.length || 0} relics available`
     },
     {
       id: 'stats',
@@ -79,7 +79,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       bgColor: 'from-yellow-900/50 to-orange-900/50',
       borderColor: 'border-yellow-500/50',
       description: 'Track your progress and unlock rewards',
-      status: `${gameState.achievements.filter(a => a.unlocked).length}/${gameState.achievements.length} unlocked`
+      status: `${gameState.achievements?.filter(a => a.unlocked)?.length || 0}/${gameState.achievements?.length || 0} unlocked`
     },
     {
       id: 'progression',
@@ -89,7 +89,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       bgColor: 'from-purple-900/50 to-indigo-900/50',
       borderColor: 'border-purple-500/50',
       description: 'Level up and unlock new skills',
-      status: `Level ${gameState.progression.level} (${gameState.progression.skillPoints} SP)`
+      status: `Level ${gameState.progression?.level || 1} (${gameState.progression?.skillPoints || 0} SP)`
     },
     {
       id: 'settings',
@@ -99,7 +99,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       bgColor: 'from-gray-900/50 to-slate-900/50',
       borderColor: 'border-gray-500/50',
       description: 'Customize your game experience',
-      status: `${gameState.settings.language.toUpperCase()} | ${gameState.settings.darkMode ? 'Dark' : 'Light'} mode`
+      status: `${gameState.settings?.language?.toUpperCase() || 'EN'} | ${gameState.settings?.darkMode ? 'Dark' : 'Light'} mode`
     },
     {
       id: 'devtools',
@@ -222,25 +222,25 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       </div>
 
       {/* Garden Status Preview (if planted) */}
-      {gameState.gardenOfGrowth.isPlanted && (
+      {gameState.gardenOfGrowth?.isPlanted && (
         <div className="bg-gradient-to-r from-green-900/30 to-emerald-900/30 p-4 sm:p-6 rounded-lg border border-green-500/30">
-          <div className="flex items-center gap-3 mb-4">
+              <p className="text-white text-lg sm:text-xl font-bold">{gameState.zone || 1}</p>
             <Sprout className="w-5 h-5 sm:w-6 sm:h-6 text-green-400" />
             <h3 className="text-green-400 font-bold text-base sm:text-lg">🌱 Your Garden</h3>
           </div>
-          
+              <p className="text-white text-lg sm:text-xl font-bold">{gameState.progression?.level || 1}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="text-center">
               <p className="text-green-300 font-semibold text-sm">Growth</p>
-              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth.growthCm.toFixed(1)}cm</p>
-            </div>
+              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth?.growthCm?.toFixed(1) || 0}cm</p>
+                {Math.round(((gameState.statistics?.correctAnswers || 0) / Math.max(gameState.statistics?.totalQuestionsAnswered || 1, 1)) * 100)}%
             <div className="text-center">
               <p className="text-blue-300 font-semibold text-sm">Stat Bonus</p>
-              <p className="text-white text-lg sm:text-xl font-bold">+{gameState.gardenOfGrowth.totalGrowthBonus.toFixed(1)}%</p>
+              <p className="text-white text-lg sm:text-xl font-bold">+{gameState.gardenOfGrowth?.totalGrowthBonus?.toFixed(1) || 0}%</p>
             </div>
             <div className="text-center">
-              <p className="text-cyan-300 font-semibold text-sm">Water Left</p>
-              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth.waterHoursRemaining.toFixed(1)}h</p>
+                {gameState.achievements?.filter(a => a.unlocked)?.length || 0}/{gameState.achievements?.length || 0}
+              <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth?.waterHoursRemaining?.toFixed(1) || 0}h</p>
             </div>
           </div>
           
@@ -248,11 +248,11 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
             <div className="w-full bg-gray-700 rounded-full h-3">
               <div 
                 className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all duration-500"
-                style={{ width: `${Math.min((gameState.gardenOfGrowth.growthCm / gameState.gardenOfGrowth.maxGrowthCm) * 100, 100)}%` }}
+                style={{ width: `${Math.min(((gameState.gardenOfGrowth?.growthCm || 0) / (gameState.gardenOfGrowth?.maxGrowthCm || 100)) * 100, 100)}%` }}
               />
             </div>
             <p className="text-center text-gray-300 text-xs sm:text-sm mt-2">
-              Progress to maximum growth ({gameState.gardenOfGrowth.maxGrowthCm}cm)
+              Progress to maximum growth ({gameState.gardenOfGrowth?.maxGrowthCm || 100}cm)
             </p>
           </div>
         </div>

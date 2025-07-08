@@ -84,7 +84,6 @@ function App() {
     addGems,
     teleportToZone,
     setExperience,
-    rollSkill,
     selectAdventureSkill,
     skipAdventureSkills,
     spendFragments,
@@ -150,7 +149,7 @@ function App() {
   }
 
   // Show adventure skill selection modal
-  if (gameState?.adventureSkills?.showSelectionModal && !gameState.inCombat) {
+  if (gameState?.adventureSkills?.showSelectionModal && gameState?.adventureSkills?.availableSkills?.length > 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <FloatingIcons />
@@ -168,13 +167,13 @@ function App() {
   // ONLY show modals if NOT in combat
   if (!gameState.inCombat) {
     // Show offline progress modal if there are rewards
-    if (gameState.offlineProgress.offlineCoins > 0 || gameState.offlineProgress.offlineGems > 0) {
+    if (gameState.offlineProgress?.offlineCoins > 0 || gameState.offlineProgress?.offlineGems > 0) {
       if (currentModal !== 'offlineProgress') {
         setCurrentModal('offlineProgress');
       }
     }
     // Show daily rewards modal if available (only after offline progress is handled)
-    else if (gameState.dailyRewards.availableReward && currentModal !== 'dailyRewards') {
+    else if (gameState.dailyRewards?.availableReward && currentModal !== 'dailyRewards') {
       setCurrentModal('dailyRewards');
     }
   }
@@ -281,7 +280,6 @@ function App() {
               onAddGems={addGems}
               onTeleportToZone={teleportToZone}
               onSetExperience={setExperience}
-              onRollSkill={rollSkill}
               onPurchaseRelic={purchaseRelic}
               onBack={() => setCurrentView('stats')}
             />
@@ -301,7 +299,7 @@ function App() {
             />
 
             {/* Garden Status */}
-            {gameState.gardenOfGrowth.isPlanted && (
+            {gameState.gardenOfGrowth?.isPlanted && (
               <div className="bg-gradient-to-r from-green-900/50 to-emerald-900/50 p-4 sm:p-6 rounded-xl border border-green-500/50 backdrop-blur-sm">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-white font-bold text-base sm:text-lg flex items-center gap-2">
@@ -312,15 +310,15 @@ function App() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                   <div className="text-center bg-black/20 p-3 rounded-lg">
                     <p className="text-green-300 font-semibold text-sm">Growth</p>
-                    <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth.growthCm.toFixed(1)}cm</p>
+                    <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth?.growthCm?.toFixed(1) || 0}cm</p>
                   </div>
                   <div className="text-center bg-black/20 p-3 rounded-lg">
                     <p className="text-blue-300 font-semibold text-sm">Stat Bonus</p>
-                    <p className="text-white text-lg sm:text-xl font-bold">+{gameState.gardenOfGrowth.totalGrowthBonus.toFixed(1)}%</p>
+                    <p className="text-white text-lg sm:text-xl font-bold">+{gameState.gardenOfGrowth?.totalGrowthBonus?.toFixed(1) || 0}%</p>
                   </div>
                   <div className="text-center bg-black/20 p-3 rounded-lg">
                     <p className="text-cyan-300 font-semibold text-sm">Water Left</p>
-                    <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth.waterHoursRemaining.toFixed(1)}h</p>
+                    <p className="text-white text-lg sm:text-xl font-bold">{gameState.gardenOfGrowth?.waterHoursRemaining?.toFixed(1) || 0}h</p>
                   </div>
                 </div>
                 
@@ -328,18 +326,18 @@ function App() {
                   <div className="w-full bg-gray-700 rounded-full h-3">
                     <div 
                       className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all duration-500"
-                      style={{ width: `${Math.min((gameState.gardenOfGrowth.growthCm / gameState.gardenOfGrowth.maxGrowthCm) * 100, 100)}%` }}
+                      style={{ width: `${Math.min(((gameState.gardenOfGrowth?.growthCm || 0) / (gameState.gardenOfGrowth?.maxGrowthCm || 100)) * 100, 100)}%` }}
                     />
                   </div>
                   <p className="text-center text-gray-300 text-xs sm:text-sm mt-2">
-                    Progress to maximum growth ({gameState.gardenOfGrowth.maxGrowthCm}cm)
+                    Progress to maximum growth ({gameState.gardenOfGrowth?.maxGrowthCm || 100}cm)
                   </p>
                 </div>
               </div>
             )}
             
             {/* Knowledge Streak Display */}
-            {gameState.knowledgeStreak.current > 0 && (
+            {gameState.knowledgeStreak?.current > 0 && (
               <div className="bg-gradient-to-r from-yellow-900/50 to-orange-900/50 p-4 sm:p-6 rounded-xl border border-yellow-500/50 backdrop-blur-sm">
                 <div className="text-center">
                   <div className="flex items-center justify-center gap-3 mb-3">
@@ -347,10 +345,10 @@ function App() {
                     <h3 className="text-yellow-400 font-bold text-lg sm:text-xl">Knowledge Streak!</h3>
                   </div>
                   <p className="text-white text-base sm:text-lg mb-2">
-                    {gameState.knowledgeStreak.current} correct answers in a row
+                    {gameState.knowledgeStreak?.current || 0} correct answers in a row
                   </p>
                   <p className="text-yellow-300 font-semibold text-sm sm:text-base">
-                    +{Math.round((gameState.knowledgeStreak.multiplier - 1) * 100)}% reward bonus
+                    +{Math.round(((gameState.knowledgeStreak?.multiplier || 1) - 1) * 100)}% reward bonus
                   </p>
                 </div>
               </div>
@@ -359,25 +357,25 @@ function App() {
             <div className="text-center space-y-4 sm:space-y-6">
               <button
                 onClick={startCombat}
-                disabled={gameState.playerStats.hp <= 0 || (gameState.gameMode.current === 'survival' && gameState.gameMode.survivalLives <= 0)}
+                disabled={gameState.playerStats?.hp <= 0 || (gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0)}
                 className={`w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-white transition-all duration-300 transform flex items-center gap-3 justify-center text-base sm:text-lg shadow-lg ${
-                  gameState.playerStats.hp > 0 && (gameState.gameMode.current !== 'survival' || gameState.gameMode.survivalLives > 0)
+                  gameState.playerStats?.hp > 0 && (gameState.gameMode?.current !== 'survival' || gameState.gameMode?.survivalLives > 0)
                     ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 hover:scale-105 shadow-green-500/25'
                     : 'bg-gray-600 cursor-not-allowed opacity-50'
                 }`}
               >
                 <Play className="w-5 h-5 sm:w-6 sm:h-6" />
-                {gameState.playerStats.hp <= 0 
+                {gameState.playerStats?.hp <= 0 
                   ? 'You are defeated!' 
-                  : gameState.gameMode.current === 'survival' && gameState.gameMode.survivalLives <= 0
+                  : gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0
                     ? 'No lives remaining!'
                     : 'Start Adventure'}
               </button>
               
-              {(gameState.playerStats.hp <= 0 || (gameState.gameMode.current === 'survival' && gameState.gameMode.survivalLives <= 0)) && (
+              {(gameState.playerStats?.hp <= 0 || (gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0)) && (
                 <div className="bg-red-900/30 p-4 rounded-lg border border-red-500/50">
                   <p className="text-red-400 text-sm">
-                    {gameState.gameMode.current === 'survival' && gameState.gameMode.survivalLives <= 0
+                    {gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0
                       ? 'Change game mode or reset to continue!'
                       : 'Visit the shop to get better equipment and try again!'}
                   </p>
@@ -647,7 +645,7 @@ function App() {
           {/* Quick Stats Bar - Hide during combat and on menu page */}
           {!gameState.inCombat && currentView !== 'menu' && (
             <div className="flex justify-center items-center gap-3 sm:gap-4 mb-3 sm:mb-4 text-xs sm:text-sm">
-              {gameState.dailyRewards.availableReward && (
+              {gameState.dailyRewards?.availableReward && (
                 <button
                   onClick={() => setCurrentModal('dailyRewards')}
                   className="flex items-center gap-1 sm:gap-2 text-green-300 hover:text-green-200 transition-colors animate-pulse px-2 sm:px-3 py-1 rounded-lg hover:bg-white/10"
