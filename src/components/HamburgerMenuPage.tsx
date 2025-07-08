@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Sprout, BarChart3, Trophy, TrendingUp, Settings, ArrowLeft, Code, Zap, Package } from 'lucide-react';
+import { Sprout, BarChart3, Trophy, TrendingUp, Settings, ArrowLeft, Code, Package } from 'lucide-react';
 import { GardenOfGrowth } from './GardenOfGrowth';
 import { Statistics } from './Statistics';
 import { Achievements } from './Achievements';
 import { ProgressionPanel } from './ProgressionPanel';
 import { GameSettings } from './GameSettings';
 import { DevTools } from './DevTools';
-import { Skills } from './Skills';
 import { YojefMarket } from './YojefMarket';
 import { GameState, GameSettings as SettingsType } from '../types/game';
 
@@ -21,7 +20,6 @@ interface HamburgerMenuPageProps {
   onAddGems: (amount: number) => void;
   onTeleportToZone: (zone: number) => void;
   onSetExperience: (xp: number) => void;
-  onRollSkill: () => boolean;
   onPurchaseRelic: (relicId: string) => boolean;
   onBack: () => void;
 }
@@ -37,11 +35,10 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
   onAddGems,
   onTeleportToZone,
   onSetExperience,
-  onRollSkill,
   onPurchaseRelic,
   onBack
 }) => {
-  const [activeSection, setActiveSection] = useState<'garden' | 'stats' | 'achievements' | 'progression' | 'settings' | 'devtools' | 'skills' | 'yojef' | null>(null);
+  const [activeSection, setActiveSection] = useState<'garden' | 'stats' | 'achievements' | 'progression' | 'settings' | 'devtools' | 'yojef' | null>(null);
 
   const menuItems = [
     {
@@ -53,16 +50,6 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
       borderColor: 'border-green-500/50',
       description: 'Grow plants for permanent stat bonuses',
       status: gameState.gardenOfGrowth.isPlanted ? `${gameState.gardenOfGrowth.growthCm.toFixed(1)}cm grown` : 'Not planted'
-    },
-    {
-      id: 'skills',
-      name: 'Menu Skills',
-      icon: Zap,
-      color: 'text-purple-400',
-      bgColor: 'from-purple-900/50 to-indigo-900/50',
-      borderColor: 'border-purple-500/50',
-      description: 'Roll for powerful temporary abilities',
-      status: gameState.skills?.activeMenuSkill ? `${gameState.skills.activeMenuSkill.name} active` : 'No active skill'
     },
     {
       id: 'yojef',
@@ -135,15 +122,6 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
             coins={gameState.coins}
             onPlantSeed={onPlantSeed}
             onBuyWater={onBuyWater}
-            onClose={() => setActiveSection(null)}
-          />
-        );
-      case 'skills':
-        return (
-          <Skills
-            skills={gameState.skills}
-            coins={gameState.coins}
-            onRollSkill={onRollSkill}
             onClose={() => setActiveSection(null)}
           />
         );

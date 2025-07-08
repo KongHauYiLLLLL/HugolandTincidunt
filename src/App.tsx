@@ -8,7 +8,7 @@ import { Mining } from './components/Mining';
 import { Merchant } from './components/Merchant';
 import { FloatingIcons } from './components/FloatingIcons';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
-import { Shield, Package, User, Play, RotateCcw, Crown, Gift, Pickaxe, Menu, ArrowLeft, Store } from 'lucide-react';
+import { Shield, Package, User, Play, RotateCcw, Crown, Gift, Pickaxe, Menu, ArrowLeft, Store, Zap } from 'lucide-react';
 import { animateButtonClick, initGSAPAnimations } from './utils/gsapAnimations';
 
 // Lazy load heavy components
@@ -27,7 +27,6 @@ import {
   LazyGardenOfGrowth,
   LazyGameSettings,
   LazyDevTools,
-  LazySkills,
   LazyYojefMarket,
   LazyProgressionPanel,
   LazyAdventureSkillSelection
@@ -88,7 +87,6 @@ function App() {
     rollSkill,
     selectAdventureSkill,
     skipAdventureSkills,
-    useSkipCard,
     spendFragments,
     selectMerchantReward,
   } = useGameState();

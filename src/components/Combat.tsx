@@ -61,7 +61,12 @@ export const Combat: React.FC<CombatProps> = ({
   const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
 
   // Increased time limits to make the game easier
-  const questionTime = (gameMode.current === 'blitz' || gameMode.current === 'bloodlust') ? 5 : 8;
+  let questionTime = (gameMode.current === 'blitz' || gameMode.current === 'bloodlust') ? 5 : 8;
+  
+  // Apply time slow effect
+  if (adventureSkills?.skillEffects.timeSlowActive) {
+    questionTime = Math.floor(questionTime * 1.5);
+  }
 
   useEffect(() => {
     let question = getQuestionByZone(enemy.zone);

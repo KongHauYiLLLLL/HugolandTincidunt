@@ -15,7 +15,6 @@ export const LazyHamburgerMenuPage = lazy(() => import('./HamburgerMenuPage').th
 export const LazyGardenOfGrowth = lazy(() => import('./GardenOfGrowth').then(module => ({ default: module.GardenOfGrowth })));
 export const LazyGameSettings = lazy(() => import('./GameSettings').then(module => ({ default: module.GameSettings })));
 export const LazyDevTools = lazy(() => import('./DevTools').then(module => ({ default: module.DevTools })));
-export const LazySkills = lazy(() => import('./Skills').then(module => ({ default: module.Skills })));
 export const LazyYojefMarket = lazy(() => import('./YojefMarket').then(module => ({ default: module.YojefMarket })));
 export const LazyProgressionPanel = lazy(() => import('./ProgressionPanel').then(module => ({ default: module.ProgressionPanel })));
 export const LazyAdventureSkillSelection = lazy(() => import('./AdventureSkillSelection').then(module => ({ default: module.AdventureSkillSelection })));

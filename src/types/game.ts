@@ -24,7 +24,6 @@ export interface GameState {
   gardenOfGrowth: GardenOfGrowth;
   settings: GameSettings;
   hasUsedRevival: boolean;
-  skills: SkillsSystem;
   adventureSkills: AdventureSkillsState;
   research: ResearchSystem;
   multipliers: Multipliers;
@@ -282,24 +281,6 @@ export interface GameSettings {
   beautyMode: boolean;
 }
 
-export interface SkillsSystem {
-  activeMenuSkill: MenuSkill | null;
-  lastRollTime: Date | null;
-  playTimeThisSession: number;
-  sessionStartTime: Date;
-}
-
-export interface MenuSkill {
-  id: string;
-  name: string;
-  description: string;
-  duration: number; // in hours
-  activatedAt: Date;
-  expiresAt: Date;
-  type: 'coin_vacuum' | 'treasurer' | 'xp_surge' | 'luck_gem' | 'enchanter' | 'time_warp' | 'golden_touch' | 'knowledge_boost' | 'durability_master' | 'relic_finder' | 'stat_amplifier' | 'question_master' | 'gem_magnet' | 'streak_guardian' | 'revival_blessing' | 'zone_skipper' | 'item_duplicator' | 'research_accelerator' | 'garden_booster' | 'market_refresh' | 'coin_multiplier' | 'gem_multiplier' | 'xp_multiplier' | 'damage_boost' | 'defense_boost' | 'health_boost' | 'speed_boost' | 'luck_boost' | 'magic_shield' | 'auto_heal';
-  isExpired?: boolean;
-}
-
 export interface AdventureSkillsState {
   selectedSkill: AdventureSkill | null;
   availableSkills: AdventureSkill[];
@@ -338,7 +319,7 @@ export interface AdventureSkill {
   id: string;
   name: string;
   description: string;
-  type: 'risker' | 'lightning_chain' | 'skip_card' | 'metal_shield' | 'truth_lies' | 'ramp' | 'dodge' | 'berserker' | 'vampiric' | 'phoenix' | 'time_slow' | 'critical_strike' | 'shield_wall' | 'poison_blade' | 'arcane_shield' | 'battle_frenzy' | 'elemental_mastery' | 'shadow_step' | 'healing_aura' | 'double_strike' | 'mana_shield' | 'berserk_rage' | 'divine_protection' | 'storm_call' | 'blood_pact' | 'frost_armor' | 'fireball';
+  type: 'ramp' | 'lightning_chain' | 'skip_card' | 'metal_shield' | 'truth_lies' | 'berserker' | 'vampiric' | 'time_slow' | 'critical_strike' | 'healing_aura';
 }
 
 export interface TriviaQuestion {
@@ -397,5 +378,4 @@ export interface MerchantReward {
   xp?: number;
   healthMultiplier?: number;
   attackMultiplier?: number;
-  skill?: MenuSkill;
 }
