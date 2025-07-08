@@ -92,7 +92,7 @@ const createInitialGameState = (): GameState => ({
     totalShinyGemsMined: 0
   },
   yojefMarket: {
-    items: Array.from({ length: 5 }, () => generateRelicItem()),
+    items: [],
     lastRefresh: new Date(),
     nextRefresh: new Date(Date.now() + 5 * 60 * 1000)
   },
@@ -288,21 +288,39 @@ const useGameState = () => {
           }
           
           // Ensure Yojef Market has 5 items
-          if (!parsedState.yojefMarket || parsedState.yojefMarket.items.length !== 5) {
+          if (!parsedState.yojefMarket) {
             parsedState.yojefMarket = {
-              items: Array.from({ length: 5 }, () => generateRelicItem()),
+              items: [],
               lastRefresh: new Date(),
               nextRefresh: new Date(Date.now() + 5 * 60 * 1000)
             };
           }
           
+          // Ensure exactly 5 items in market
+          while (parsedState.yojefMarket.items.length < 5) {
+            parsedState.yojefMarket.items.push(generateRelicItem());
+          }
+          if (parsedState.yojefMarket.items.length > 5) {
+            parsedState.yojefMarket.items = parsedState.yojefMarket.items.slice(0, 5);
+          }
+          
           setGameState(parsedState);
         } else {
-          setGameState(createInitialGameState());
+          const initialState = createInitialGameState();
+          // Fill initial market with 5 relics
+          while (initialState.yojefMarket.items.length < 5) {
+            initialState.yojefMarket.items.push(generateRelicItem());
+          }
+          setGameState(initialState);
         }
       } catch (error) {
         console.error('Error loading game state:', error);
-        setGameState(createInitialGameState());
+        const initialState = createInitialGameState();
+        // Fill initial market with 5 relics
+        while (initialState.yojefMarket.items.length < 5) {
+          initialState.yojefMarket.items.push(generateRelicItem());
+        }
+        setGameState(initialState);
       } finally {
         setIsLoading(false);
       }
@@ -1040,9 +1058,12 @@ const useGameState = () => {
     setGameState(prev => {
       if (!prev) return prev;
       
-      // Remove the purchased relic and add a new one
-      const updatedItems = prev.yojefMarket.items.filter(r => r.id !== relicId);
-      updatedItems.push(generateRelicItem());
+      // Remove the purchased relic and add a new one to maintain exactly 5
+      const updatedItems = [...prev.yojefMarket.items];
+      const purchasedIndex = updatedItems.findIndex(r => r.id === relicId);
+      if (purchasedIndex !== -1) {
+        updatedItems[purchasedIndex] = generateRelicItem();
+      }
       
       return {
         ...prev,
@@ -1551,7 +1572,7 @@ const useGameState = () => {
 
   // Update player stats when equipment changes
   useEffect(() => {
-    if (gameState) {
+    if (gameState && !isLoading) {
       const newStats = calculateTotalStats();
       setGameState(prev => prev ? {
         ...prev,
@@ -1564,7 +1585,7 @@ const useGameState = () => {
         }
       } : prev);
     }
-  }, [gameState?.inventory.currentWeapon, gameState?.inventory.currentArmor, gameState?.inventory.equippedRelics]);
+  }, [gameState?.inventory?.currentWeapon, gameState?.inventory?.currentArmor, gameState?.inventory?.equippedRelics, isLoading]);
 
   return {
     gameState,

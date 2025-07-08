@@ -133,7 +133,7 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
             equippedRelicsCount={gameState.inventory.equippedRelics.length}
             onPurchaseRelic={onPurchaseRelic}
             onClose={() => setActiveSection(null)}
-            nextRefresh={gameState.yojefMarket.nextRefresh}
+            nextRefresh={new Date()}
           />
         );
       case 'stats':

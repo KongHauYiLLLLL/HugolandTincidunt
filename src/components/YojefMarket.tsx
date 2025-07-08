@@ -20,28 +20,6 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
   nextRefresh
 }) => {
   const [selectedRelic, setSelectedRelic] = useState<RelicItem | null>(null);
-  const [timeUntilRefresh, setTimeUntilRefresh] = useState(0);
-
-  // Update countdown every second using device time
-  useEffect(() => {
-    const updateCountdown = () => {
-      const now = Date.now();
-      const refreshTime = new Date(nextRefresh).getTime();
-      const timeDiff = Math.max(0, refreshTime - now);
-      setTimeUntilRefresh(timeDiff);
-    };
-
-    // Update immediately
-    updateCountdown();
-
-    // Update every second
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
-  }, [nextRefresh]);
-
-  const minutesLeft = Math.floor(timeUntilRefresh / 60000);
-  const secondsLeft = Math.floor((timeUntilRefresh % 60000) / 1000);
 
   const handlePurchase = (relic: RelicItem) => {
     const success = onPurchaseRelic(relic.id);
@@ -78,20 +56,14 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
               <Gem className="w-5 h-5 text-purple-400" />
               <span className="text-white font-semibold">Your Gems: {gems}</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5 text-yellow-400" />
-              <span className="text-yellow-400 font-semibold">
-                Refresh: {minutesLeft}m {secondsLeft}s
-              </span>
-            </div>
           </div>
           <div className="text-center">
             <p className="text-gray-300 text-sm">
               Equipped Relics: {equippedRelicsCount} | 
               <span className="text-green-400 ml-1">Unlimited relics can be equipped!</span>
             </p>
-            <p className="text-blue-400 text-xs mt-1">
-              ⏰ Market refreshes every 5 minutes with new relics!
+            <p className="text-green-400 text-xs mt-1">
+              🔄 New relics automatically restock when purchased!
             </p>
           </div>
         </div>
@@ -171,7 +143,7 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
         <div className="mt-6 text-center text-xs text-gray-500">
           <p>The Yojef Market deals in ancient artifacts of immense power.</p>
           <p>These relics cannot be found in regular chests and hold secrets from forgotten ages.</p>
-          <p className="text-yellow-400 mt-2">🕐 Refreshes every 5 minutes with new inventory!</p>
+          <p className="text-green-400 mt-2">🔄 Automatically restocks when you purchase relics!</p>
           <p className="text-green-400 mt-1">💪 Equip unlimited relics to absorb their combined power!</p>
         </div>
       </div>
