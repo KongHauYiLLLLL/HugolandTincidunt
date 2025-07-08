@@ -233,10 +233,6 @@ export const HamburgerMenuPage: React.FC<HamburgerMenuPageProps> = ({
             <p className="text-white text-lg sm:text-xl font-bold">{gameState.zone}</p>
           </div>
           <div className="text-center">
-            <p className="text-gray-400 text-xs sm:text-sm">Level</p>
-            <p className="text-white text-lg sm:text-xl font-bold">{gameState.progression.level}</p>
-          </div>
-          <div className="text-center">
             <p className="text-gray-400 text-xs sm:text-sm">Accuracy</p>
             <p className="text-white text-lg sm:text-xl font-bold">
               {Math.round((gameState.statistics.correctAnswers / Math.max(gameState.statistics.totalQuestionsAnswered, 1)) * 100)}%

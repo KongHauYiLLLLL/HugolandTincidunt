@@ -105,10 +105,6 @@ const createInitialGameState = (): GameState => ({
     rewardHistory: []
   },
   progression: {
-    level: 1,
-    experience: 0,
-    experienceToNext: 100,
-    skillPoints: 0,
     unlockedSkills: [],
     prestigeLevel: 0,
     prestigePoints: 0,
@@ -1192,16 +1188,15 @@ const useGameState = () => {
   }, [gameState]);
 
   const upgradeSkill = useCallback((skillId: string): boolean => {
-    if (!gameState || gameState.progression.skillPoints < 1) return false;
+    if (!gameState) return false;
 
     setGameState(prev => {
-      if (!prev || prev.progression.skillPoints < 1) return prev;
+      if (!prev) return prev;
       
       return {
         ...prev,
         progression: {
           ...prev.progression,
-          skillPoints: prev.progression.skillPoints - 1,
           unlockedSkills: [...prev.progression.unlockedSkills, skillId]
         }
       };
@@ -1211,29 +1206,9 @@ const useGameState = () => {
   }, [gameState]);
 
   const prestige = useCallback((): boolean => {
-    if (!gameState || gameState.progression.level < 50) return false;
-
-    const prestigePoints = Math.floor(gameState.progression.level / 10);
+    // Prestige disabled without levels
+    return false;
     
-    setGameState(prev => {
-      if (!prev || prev.progression.level < 50) return prev;
-      
-      return {
-        ...prev,
-        progression: {
-          level: 1,
-          experience: 0,
-          experienceToNext: 100,
-          skillPoints: 0,
-          unlockedSkills: [],
-          prestigeLevel: prev.progression.prestigeLevel + 1,
-          prestigePoints: prev.progression.prestigePoints + prestigePoints,
-          masteryLevels: prev.progression.masteryLevels
-        }
-      };
-    });
-
-    return true;
   }, [gameState]);
 
   const claimOfflineRewards = useCallback(() => {

@@ -240,10 +240,6 @@ export interface DailyReward {
 }
 
 export interface ProgressionSystem {
-  level: number;
-  experience: number;
-  experienceToNext: number;
-  skillPoints: number;
   unlockedSkills: string[];
   prestigeLevel: number;
   prestigePoints: number;

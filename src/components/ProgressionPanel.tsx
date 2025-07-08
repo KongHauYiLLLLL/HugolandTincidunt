@@ -80,11 +80,11 @@ export const ProgressionPanel: React.FC<ProgressionPanelProps> = ({
 
   const canUpgradeSkill = (skill: any): boolean => {
     const currentLevel = getSkillLevel(skill.id);
-    return currentLevel < skill.maxLevel && progression.skillPoints >= skill.cost;
+    return currentLevel < skill.maxLevel;
   };
 
-  const canPrestige = progression.level >= 50;
-  const prestigeReward = Math.floor(progression.level / 10);
+  const canPrestige = false; // Prestige disabled without levels
+  const prestigeReward = 0;
 
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
@@ -94,9 +94,7 @@ export const ProgressionPanel: React.FC<ProgressionPanelProps> = ({
             <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-400" />
             <div>
               <h2 className="text-white font-bold text-lg sm:text-xl">Progression System</h2>
-              <p className="text-indigo-300 text-sm">
-                Level {progression.level} | {progression.experience}/{progression.experienceToNext} XP
-              </p>
+              <p className="text-indigo-300 text-sm">Character Progression</p>
             </div>
           </div>
           <button
@@ -107,19 +105,6 @@ export const ProgressionPanel: React.FC<ProgressionPanelProps> = ({
           </button>
         </div>
 
-        {/* Experience Bar */}
-        <div className="mb-6">
-          <div className="w-full bg-gray-700 rounded-full h-3">
-            <div 
-              className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-              style={{ width: `${(progression.experience / progression.experienceToNext) * 100}%` }}
-            />
-          </div>
-          <div className="flex justify-between text-sm text-gray-300 mt-1">
-            <span>Level {progression.level}</span>
-            <span>Skill Points: {progression.skillPoints}</span>
-          </div>
-        </div>
 
         {/* Tab Navigation */}
         <div className="flex gap-2 mb-6">
@@ -168,9 +153,6 @@ export const ProgressionPanel: React.FC<ProgressionPanelProps> = ({
                     <span className="text-gray-300 text-sm">
                       Level {currentLevel}/{skill.maxLevel}
                     </span>
-                    <span className="text-yellow-400 text-sm">
-                      Cost: {skill.cost} SP
-                    </span>
                   </div>
 
                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
@@ -203,13 +185,12 @@ export const ProgressionPanel: React.FC<ProgressionPanelProps> = ({
               <Crown className="w-16 h-16 text-yellow-400 mx-auto mb-4" />
               <h3 className="text-yellow-400 font-bold text-xl mb-2">Prestige System</h3>
               <p className="text-white mb-4">
-                Reset your level to gain permanent bonuses and prestige points
+                Prestige system currently disabled
               </p>
               
               <div className="space-y-2 mb-4">
                 <p className="text-gray-300">Current Prestige Level: {progression.prestigeLevel}</p>
                 <p className="text-gray-300">Prestige Points: {progression.prestigePoints}</p>
-                <p className="text-yellow-300">Next Prestige Reward: +{prestigeReward} Prestige Points</p>
               </div>
 
               <button
@@ -221,14 +202,13 @@ export const ProgressionPanel: React.FC<ProgressionPanelProps> = ({
                     : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                {canPrestige ? 'Prestige Now!' : `Reach Level 50 to Prestige (Level ${progression.level})`}
+                Prestige Disabled
               </button>
             </div>
 
             <div className="bg-black/30 p-4 rounded-lg">
               <h4 className="text-white font-bold mb-3">Prestige Benefits</h4>
               <div className="text-sm text-gray-300 space-y-1">
-                <p>• +5% experience gain per prestige level</p>
                 <p>• +10% coin and gem rewards per prestige level</p>
                 <p>• Unlock exclusive prestige skills</p>
                 <p>• Keep all achievements and collection progress</p>

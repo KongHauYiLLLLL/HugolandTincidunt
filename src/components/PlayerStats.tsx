@@ -15,10 +15,6 @@ interface PlayerStatsProps {
   shinyGems: number;
   playerTags: PlayerTag[];
   progression: {
-    level: number;
-    experience: number;
-    experienceToNext: number;
-    skillPoints: number;
   };
 }
 
@@ -55,30 +51,6 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
       )}
 
       <div className="space-y-4">
-        {/* Character Level */}
-        <div className="bg-black/30 p-4 rounded-xl border border-indigo-500/30">
-          <div className="flex items-center gap-3 mb-3">
-            <TrendingUp className="w-5 h-5 text-indigo-400" />
-            <span className="text-white font-semibold">Character Level</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-indigo-400 font-bold text-2xl">Lv.{progression.level}</span>
-            <div className="flex-1">
-              <div className="w-full bg-gray-700 rounded-full h-3">
-                <div 
-                  className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-                  style={{ width: `${(progression.experience / progression.experienceToNext) * 100}%` }}
-                />
-              </div>
-              <p className="text-xs text-gray-300 mt-2">
-                {progression.experience}/{progression.experienceToNext} XP
-              </p>
-            </div>
-            <span className="text-yellow-400 font-semibold bg-black/30 px-3 py-1 rounded-lg">
-              SP: {progression.skillPoints}
-            </span>
-          </div>
-        </div>
         
         {/* Health */}
         <div className="bg-black/30 p-4 rounded-xl border border-red-500/30">
