@@ -54,9 +54,7 @@ const createInitialGameState = (): GameState => ({
   },
   gameMode: {
     current: 'normal',
-    speedModeActive: false,
-    survivalLives: 3,
-    maxSurvivalLives: 3
+    speedModeActive: false
   },
   statistics: {
     totalQuestionsAnswered: 0,
@@ -283,7 +281,7 @@ const useGameState = () => {
             parsedState.playerStats.hp = Math.min(parsedState.playerStats.hp, 300);
           }
           
-          // Ensure Yojef Market has 5 items
+          // Ensure Yojef Market has 2 items
           if (!parsedState.yojefMarket) {
             parsedState.yojefMarket = {
               items: [],
@@ -292,19 +290,23 @@ const useGameState = () => {
             };
           }
           
-          // Ensure exactly 5 items in market
-          while (parsedState.yojefMarket.items.length < 5) {
+          // Ensure exactly 2 items in market
+          while (parsedState.yojefMarket.items.length < 2) {
             parsedState.yojefMarket.items.push(generateRelicItem());
           }
-          if (parsedState.yojefMarket.items.length > 5) {
-            parsedState.yojefMarket.items = parsedState.yojefMarket.items.slice(0, 5);
+          if (parsedState.yojefMarket.items.length > 2) {
+            parsedState.yojefMarket.items = parsedState.yojefMarket.items.slice(0, 2);
           }
           
           setGameState(parsedState);
         } else {
           const initialState = createInitialGameState();
-          // Fill initial market with 5 relics
-          while (initialState.yojefMarket.items.length < 5) {
+          // Fill initial market with 2 relics (1 weapon, 1 armor)
+          initialState.yojefMarket.items = [
+            generateRelicItem('weapon'),
+            generateRelicItem('armor')
+          ];
+          while (initialState.yojefMarket.items.length < 2) {
             initialState.yojefMarket.items.push(generateRelicItem());
           }
           setGameState(initialState);
@@ -312,8 +314,8 @@ const useGameState = () => {
       } catch (error) {
         console.error('Error loading game state:', error);
         const initialState = createInitialGameState();
-        // Fill initial market with 5 relics
-        while (initialState.yojefMarket.items.length < 5) {
+        // Fill initial market with 2 relics
+        while (initialState.yojefMarket.items.length < 2) {
           initialState.yojefMarket.items.push(generateRelicItem());
         }
         setGameState(initialState);
@@ -962,13 +964,12 @@ const useGameState = () => {
     setCorrectAnswersThisCombat(0);
   }, []);
 
-  const setGameMode = useCallback((mode: 'normal' | 'blitz' | 'bloodlust' | 'survival') => {
+  const setGameMode = useCallback((mode: 'normal' | 'blitz' | 'bloodlust') => {
     setGameState(prev => prev ? {
       ...prev,
       gameMode: {
         ...prev.gameMode,
-        current: mode,
-        survivalLives: mode === 'survival' ? 3 : prev.gameMode.survivalLives
+        current: mode
       }
     } : prev);
   }, []);
@@ -1054,11 +1055,12 @@ const useGameState = () => {
     setGameState(prev => {
       if (!prev) return prev;
       
-      // Remove the purchased relic and add a new one to maintain exactly 5
+      // Remove the purchased relic and add a new one to maintain exactly 2 (1 weapon, 1 armor)
       const updatedItems = [...prev.yojefMarket.items];
       const purchasedIndex = updatedItems.findIndex(r => r.id === relicId);
       if (purchasedIndex !== -1) {
-        updatedItems[purchasedIndex] = generateRelicItem();
+        // Generate same type of relic to replace it
+        updatedItems[purchasedIndex] = generateRelicItem(relic.type);
       }
       
       return {
@@ -1414,7 +1416,7 @@ const useGameState = () => {
   }, []);
 
   const spendFragments = useCallback((): boolean => {
-    if (!gameState || gameState.merchant.hugollandFragments < 5) return false;
+    if (!gameState || gameState.merchant.hugollandFragments < 3) return false;
 
     // Generate 3 random rewards
     const rewards: MerchantReward[] = [
@@ -1451,7 +1453,7 @@ const useGameState = () => {
         ...prev,
         merchant: {
           ...prev.merchant,
-          hugollandFragments: prev.merchant.hugollandFragments - 5,
+          hugollandFragments: prev.merchant.hugollandFragments - 3,
           showRewardModal: true,
           availableRewards: rewards
         }

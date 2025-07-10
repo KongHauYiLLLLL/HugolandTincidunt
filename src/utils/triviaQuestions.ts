@@ -670,23 +670,9 @@ export const getRandomQuestion = (difficulty?: 'easy' | 'medium' | 'hard'): Triv
 };
 
 export const getQuestionByZone = (zone: number): TriviaQuestion => {
-  // Much easier progression - mostly easy questions for longer
-  if (zone <= 10) {
-    return getRandomQuestion('easy');
-  }
-  // Medium questions for zones 11-25
-  else if (zone <= 25) {
-    // 70% easy, 30% medium for smoother transition
-    return Math.random() < 0.7 ? getRandomQuestion('easy') : getRandomQuestion('medium');
-  }
-  // Hard questions only for very high zones (26+)
-  else {
-    // 40% easy, 40% medium, 20% hard
-    const rand = Math.random();
-    if (rand < 0.4) return getRandomQuestion('easy');
-    if (rand < 0.8) return getRandomQuestion('medium');
-    return getRandomQuestion('hard');
-  }
+  // Allow any question difficulty on any zone
+  const randomIndex = Math.floor(Math.random() * triviaQuestions.length);
+  return triviaQuestions[randomIndex];
 };
 
 export const checkAnswer = (question: TriviaQuestion, userAnswer: string | number): boolean => {

@@ -59,7 +59,7 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
           </div>
           <div className="text-center">
             <p className="text-gray-300 text-sm">
-              Equipped Relics: {equippedRelicsCount} | 
+              Equipped Relics: {equippedRelicsCount} |
               <span className="text-green-400 ml-1">Unlimited relics can be equipped!</span>
             </p>
             <p className="text-green-400 text-xs mt-1">
@@ -144,7 +144,7 @@ export const YojefMarket: React.FC<YojefMarketProps> = ({
           <p>The Yojef Market deals in ancient artifacts of immense power.</p>
           <p>These relics cannot be found in regular chests and hold secrets from forgotten ages.</p>
           <p className="text-green-400 mt-2">🔄 Automatically restocks when you purchase relics!</p>
-          <p className="text-green-400 mt-1">💪 Equip unlimited relics to absorb their combined power!</p>
+          <p className="text-green-400 mt-1">💪 Always 1 weapon and 1 armor relic available!</p>
         </div>
       </div>
     </div>

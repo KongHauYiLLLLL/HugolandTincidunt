@@ -149,10 +149,8 @@ export interface KnowledgeStreak {
 }
 
 export interface GameMode {
-  current: 'normal' | 'blitz' | 'bloodlust' | 'survival';
+  current: 'normal' | 'blitz' | 'bloodlust';
   speedModeActive: boolean;
-  survivalLives: number;
-  maxSurvivalLives: number;
 }
 
 export interface Statistics {
@@ -364,7 +362,7 @@ export interface MerchantSystem {
 
 export interface MerchantReward {
   id: string;
-  type: 'item' | 'coins' | 'gems' | 'xp' | 'health' | 'attack' | 'skill';
+  type: 'item' | 'coins' | 'gems' | 'xp' | 'health' | 'attack';
   name: string;
   description: string;
   icon: string;

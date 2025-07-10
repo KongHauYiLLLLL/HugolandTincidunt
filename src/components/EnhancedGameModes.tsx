@@ -4,7 +4,7 @@ import { Zap, Heart, Clock, X, Sword, Shield } from 'lucide-react';
 
 interface EnhancedGameModesProps {
   currentMode: GameMode;
-  onSelectMode: (mode: 'normal' | 'blitz' | 'bloodlust' | 'survival') => void;
+  onSelectMode: (mode: 'normal' | 'blitz' | 'bloodlust') => void;
   onClose: () => void;
 }
 
@@ -37,14 +37,6 @@ export const EnhancedGameModes: React.FC<EnhancedGameModesProps> = ({
       icon: Sword,
       color: 'red',
       features: ['5 seconds per question', '+100% ATK', '-50% DEF', '-50% HP']
-    },
-    {
-      id: 'survival' as const,
-      name: 'Survival',
-      description: 'Limited lives with double rewards',
-      icon: Shield,
-      color: 'green',
-      features: ['3 lives total', 'No health restoration', 'Increasing difficulty', '+100% rewards (2x multiplier)']
     }
   ];
 

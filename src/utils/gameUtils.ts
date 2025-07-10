@@ -171,8 +171,8 @@ export const generateArmor = (forceChroma = false, forceRarity?: string, forceEn
   };
 };
 
-export const generateRelicItem = (): RelicItem => {
-  const isWeapon = Math.random() < 0.5;
+export const generateRelicItem = (forceType?: 'weapon' | 'armor'): RelicItem => {
+  const isWeapon = forceType ? forceType === 'weapon' : Math.random() < 0.5;
   const names = isWeapon ? relicNames.weapons : relicNames.armor;
   const name = names[Math.floor(Math.random() * names.length)];
   

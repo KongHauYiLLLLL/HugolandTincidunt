@@ -358,9 +358,9 @@ function App() {
             <div className="text-center space-y-4 sm:space-y-6">
               <button
                 onClick={startCombat}
-                disabled={gameState.playerStats?.hp <= 0 || (gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0)}
+                disabled={gameState.playerStats?.hp <= 0}
                 className={`w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-white transition-all duration-300 transform flex items-center gap-3 justify-center text-base sm:text-lg shadow-lg ${
-                  gameState.playerStats?.hp > 0 && (gameState.gameMode?.current !== 'survival' || gameState.gameMode?.survivalLives > 0)
+                  gameState.playerStats?.hp > 0
                     ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 hover:scale-105 shadow-green-500/25'
                     : 'bg-gray-600 cursor-not-allowed opacity-50'
                 }`}
@@ -368,17 +368,13 @@ function App() {
                 <Play className="w-5 h-5 sm:w-6 sm:h-6" />
                 {gameState.playerStats?.hp <= 0 
                   ? 'You are defeated!' 
-                  : gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0
-                    ? 'No lives remaining!'
                     : 'Start Adventure'}
               </button>
               
-              {(gameState.playerStats?.hp <= 0 || (gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0)) && (
+              {gameState.playerStats?.hp <= 0 && (
                 <div className="bg-red-900/30 p-4 rounded-lg border border-red-500/50">
                   <p className="text-red-400 text-sm">
-                    {gameState.gameMode?.current === 'survival' && gameState.gameMode?.survivalLives <= 0
-                      ? 'Change game mode or reset to continue!'
-                      : 'Visit the shop to get better equipment and try again!'}
+                    Visit the shop to get better equipment and try again!
                   </p>
                 </div>
               )}

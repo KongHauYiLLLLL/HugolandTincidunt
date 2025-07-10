@@ -19,7 +19,7 @@ export const Merchant: React.FC<MerchantProps> = ({
   const handleSpendFragments = () => {
     const success = onSpendFragments();
     if (!success) {
-      alert('You need 5 Hugoland Fragments to make a purchase!');
+      alert('You need 3 Hugoland Fragments to make a purchase!');
     }
   };
 
@@ -165,7 +165,7 @@ export const Merchant: React.FC<MerchantProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="text-center bg-black/20 p-3 rounded-lg">
               <p className="text-orange-400 font-semibold text-sm">Current</p>
-              <p className="text-white text-2xl sm:text-3xl font-bold">{merchant.hugollandFragments}/5</p>
+              <p className="text-white text-2xl sm:text-3xl font-bold">{merchant.hugollandFragments}/3</p>
             </div>
             <div className="text-center bg-black/20 p-3 rounded-lg">
               <p className="text-yellow-400 font-semibold text-sm">Total Earned</p>
@@ -178,11 +178,11 @@ export const Merchant: React.FC<MerchantProps> = ({
             <div className="w-full bg-gray-700 rounded-full h-3">
               <div 
                 className="bg-gradient-to-r from-orange-500 to-yellow-500 h-3 rounded-full transition-all duration-500"
-                style={{ width: `${(merchant.hugollandFragments / 5) * 100}%` }}
+                style={{ width: `${(merchant.hugollandFragments / 3) * 100}%` }}
               />
             </div>
             <p className="text-center text-gray-300 text-xs sm:text-sm mt-2">
-              {5 - merchant.hugollandFragments} more fragments needed
+              {3 - merchant.hugollandFragments} more fragments needed
             </p>
           </div>
         </div>
@@ -190,15 +190,15 @@ export const Merchant: React.FC<MerchantProps> = ({
         {/* Purchase Button */}
         <button
           onClick={handleSpendFragments}
-          disabled={merchant.hugollandFragments < 5}
+          disabled={merchant.hugollandFragments < 3}
           className={`w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-white transition-all duration-300 transform flex items-center gap-3 justify-center text-base sm:text-lg shadow-lg ${
-            merchant.hugollandFragments >= 5
+            merchant.hugollandFragments >= 3
               ? 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-500 hover:to-red-500 hover:scale-105 shadow-orange-500/25'
               : 'bg-gray-600 cursor-not-allowed opacity-50'
           }`}
         >
           <Package className="w-5 h-5 sm:w-6 sm:h-6" />
-          {merchant.hugollandFragments >= 5 ? 'Trade 5 Fragments' : 'Need More Fragments'}
+          {merchant.hugollandFragments >= 3 ? 'Trade 3 Fragments' : 'Need More Fragments'}
         </button>
 
         {/* Info Section */}
@@ -242,7 +242,7 @@ export const Merchant: React.FC<MerchantProps> = ({
         {/* How to Get Fragments */}
         <div className="mt-4 text-center text-xs sm:text-sm text-gray-400">
           <p>💡 Earn 1 Hugoland Fragment every 5 zones you complete!</p>
-          <p>Next fragment at zone: {Math.ceil((merchant.lastFragmentZone + 1) / 5) * 5}</p>
+          <p>You need 3 fragments to make a purchase.</p>
         </div>
       </div>
     </div>
