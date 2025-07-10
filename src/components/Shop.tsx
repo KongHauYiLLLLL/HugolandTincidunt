@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ChestReward, Weapon, Armor } from '../types/game';
 import { Package, Coins, Gem, X, Trash2 } from 'lucide-react';
 import { getRarityColor, getRarityBorder, getRarityGlow } from '../utils/gameUtils';
+import { LoadingSpinner } from './LoadingSpinner';
 
 interface ShopProps {
   coins: number;
@@ -116,7 +117,7 @@ export const Shop: React.FC<ShopProps> = ({ coins, onOpenChest, onDiscardItem, i
       {/* Opening Animation */}
       {isOpening && (
         <div className="text-center py-6 sm:py-8">
-          <div className="animate-spin inline-block w-6 h-6 sm:w-8 sm:h-8 border-4 border-yellow-400 border-t-transparent rounded-full mb-3"></div>
+          <LoadingSpinner size="32" color="#facc15" className="mb-3" />
           <p className="text-white font-semibold text-sm sm:text-base">Opening chest...</p>
           <p className="text-gray-300 text-xs sm:text-sm mt-1">Discovering treasures...</p>
         </div>

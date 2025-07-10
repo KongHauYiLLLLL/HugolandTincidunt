@@ -10,6 +10,8 @@ import { FloatingIcons } from './components/FloatingIcons';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { Shield, Package, User, Play, RotateCcw, Crown, Gift, Pickaxe, Menu, ArrowLeft, Store, Zap } from 'lucide-react';
 import { animateButtonClick, initGSAPAnimations } from './utils/gsapAnimations';
+import { FunFactsPopup } from './components/FunFactsPopup';
+import { LoadingSpinner } from './components/LoadingSpinner';
 
 // Lazy load heavy components
 import {
@@ -39,7 +41,7 @@ type ModalView = 'collection' | 'gameMode' | 'pokyegMarket' | 'tutorial' | 'chea
 const LoadingSpinner = () => (
   <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
     <div className="text-center">
-      <div className="animate-spin inline-block w-12 h-12 border-4 border-purple-400 border-t-transparent rounded-full mb-4"></div>
+      <LoadingSpinner size="48" color="#a855f7" className="mb-4" />
       <p className="text-white text-lg font-semibold">Loading...</p>
     </div>
   </div>
@@ -95,6 +97,7 @@ function App() {
   const [currentModal, setCurrentModal] = useState<ModalView>(null);
   const [showWelcome, setShowWelcome] = useState(true);
   const [gsapInitialized, setGsapInitialized] = useState(false);
+  const [showFunFacts, setShowFunFacts] = useState(false);
 
   // Initialize GSAP only once when component mounts
   useEffect(() => {
@@ -141,7 +144,7 @@ function App() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin inline-block w-12 h-12 border-4 border-purple-400 border-t-transparent rounded-full mb-6"></div>
+          <LoadingSpinner size="48" color="#a855f7" className="mb-6" />
           <p className="text-white text-xl font-semibold">Loading Hugoland...</p>
           <p className="text-purple-300 text-sm mt-2">Preparing your adventure...</p>
         </div>
@@ -610,9 +613,13 @@ function App() {
         <div className="container mx-auto px-4 py-3 sm:py-4 md:py-6">
           <div className="flex items-center justify-between mb-3 sm:mb-4 md:mb-6">
             <div className="flex items-center gap-2 sm:gap-3">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+              <button
+                onClick={() => setShowFunFacts(true)}
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white hover:text-purple-300 transition-colors cursor-pointer"
+                title="Click for fun facts!"
+              >
                 🏰 Hugoland 🗡️
-              </h1>
+              </button>
               {gameState.isPremium && (
                 <Crown className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-yellow-400 animate-pulse" />
               )}
@@ -710,6 +717,12 @@ function App() {
 
       {/* Modals */}
       {renderModal()}
+      
+      {/* Fun Facts Popup */}
+      <FunFactsPopup 
+        isOpen={showFunFacts} 
+        onClose={() => setShowFunFacts(false)} 
+      />
     </div>
   );
 }

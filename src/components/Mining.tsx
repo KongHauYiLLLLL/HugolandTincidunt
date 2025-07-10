@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mining as MiningType } from '../types/game';
 import { Gem, Sparkles, X } from 'lucide-react';
+import { LoadingSpinner } from './LoadingSpinner';
 
 interface MiningProps {
   mining: MiningType;
@@ -98,7 +99,7 @@ export const Mining: React.FC<MiningProps> = ({
             )}
             {!gemNode && (
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="animate-spin w-6 h-6 border-2 border-gray-400 border-t-transparent rounded-full"></div>
+                <LoadingSpinner size="24" color="#9ca3af" />
               </div>
             )}
           </div>

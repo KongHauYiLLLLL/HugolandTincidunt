@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Enemy } from '../types/game';
 import { Sword, Shield, Heart, Brain, Clock, Zap, Skull, Flame, RotateCcw, SkipForward } from 'lucide-react';
 import { TriviaQuestion, getQuestionByZone, checkAnswer } from '../utils/triviaQuestions';
+import { LoadingSpinner } from './LoadingSpinner';
 
 interface CombatProps {
   enemy: Enemy;
@@ -212,7 +213,7 @@ export const Combat: React.FC<CombatProps> = ({
     return (
       <div className="bg-gradient-to-br from-red-900/80 via-purple-900/80 to-black/80 p-6 rounded-xl shadow-2xl backdrop-blur-sm border border-red-500/50">
         <div className="text-center py-8">
-          <div className="animate-spin inline-block w-12 h-12 border-4 border-purple-400 border-t-transparent rounded-full mb-4"></div>
+          <LoadingSpinner size="48" color="#a855f7" className="mb-4" />
           <p className="text-white text-lg">Loading question...</p>
         </div>
       </div>

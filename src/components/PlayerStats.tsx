@@ -60,7 +60,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
           </div>
           <div className="w-full bg-gray-700 rounded-full h-4">
             <div 
-              className="bg-gradient-to-r from-red-500 to-red-400 h-4 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-green-500 to-green-400 h-4 rounded-full transition-all duration-500"
               style={{ width: `${(playerStats.hp / playerStats.maxHp) * 100}%` }}
             />
           </div>
@@ -76,7 +76,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
               <Sword className="w-4 h-4 text-orange-400" />
               <span className="text-white font-semibold text-sm">Attack</span>
             </div>
-            <p className="text-2xl font-bold text-orange-400">{playerStats.atk}</p>
+            <p className="text-2xl font-bold text-orange-400 text-center">{playerStats.atk}</p>
           </div>
           
           <div className="bg-black/30 p-4 rounded-xl border border-blue-500/30">
@@ -84,7 +84,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
               <Shield className="w-4 h-4 text-blue-400" />
               <span className="text-white font-semibold text-sm">Defense</span>
             </div>
-            <p className="text-2xl font-bold text-blue-400">{playerStats.def}</p>
+            <p className="text-2xl font-bold text-blue-400 text-center">{playerStats.def}</p>
           </div>
         </div>
 
@@ -109,7 +109,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
               <Coins className="w-4 h-4 text-yellow-400" />
               <span className="text-white font-semibold text-xs">Coins</span>
             </div>
-            <p className="text-lg font-bold text-yellow-400 text-center">{coins.toLocaleString()}</p>
+            <p className="text-base font-bold text-yellow-400 text-center">{coins.toLocaleString()}</p>
           </div>
           
           <div className="bg-black/30 p-3 rounded-xl border border-purple-500/30">
@@ -117,7 +117,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
               <Gem className="w-4 h-4 text-purple-400" />
               <span className="text-white font-semibold text-xs">Gems</span>
             </div>
-            <p className="text-lg font-bold text-purple-400 text-center">{gems.toLocaleString()}</p>
+            <p className="text-base font-bold text-purple-400 text-center">{gems.toLocaleString()}</p>
           </div>
 
           <div className="bg-black/30 p-3 rounded-xl border border-yellow-500/30">
@@ -125,7 +125,7 @@ export const PlayerStats: React.FC<PlayerStatsProps> = ({
               <Sparkles className="w-4 h-4 text-yellow-400" />
               <span className="text-white font-semibold text-xs">Shiny</span>
             </div>
-            <p className="text-lg font-bold text-yellow-400 text-center">{shinyGems.toLocaleString()}</p>
+            <p className="text-base font-bold text-yellow-400 text-center">{shinyGems.toLocaleString()}</p>
           </div>
         </div>
       </div>

@@ -1,6 +1,17 @@
 import { lazy } from 'react';
 
 // Lazy load heavy components that aren't always needed
+import { LoadingSpinner } from './LoadingSpinner';
+
+const LoadingFallback = () => (
+  <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+    <div className="text-center">
+      <LoadingSpinner size="48" color="#a855f7" className="mb-4" />
+      <p className="text-white text-lg font-semibold">Loading...</p>
+    </div>
+  </div>
+);
+
 export const LazyStatistics = lazy(() => import('./Statistics').then(module => ({ default: module.Statistics })));
 export const LazyAchievements = lazy(() => import('./Achievements').then(module => ({ default: module.Achievements })));
 export const LazyCollectionBook = lazy(() => import('./CollectionBook').then(module => ({ default: module.CollectionBook })));
@@ -18,3 +29,5 @@ export const LazyDevTools = lazy(() => import('./DevTools').then(module => ({ de
 export const LazyYojefMarket = lazy(() => import('./YojefMarket').then(module => ({ default: module.YojefMarket })));
 export const LazyProgressionPanel = lazy(() => import('./ProgressionPanel').then(module => ({ default: module.ProgressionPanel })));
 export const LazyAdventureSkillSelection = lazy(() => import('./AdventureSkillSelection').then(module => ({ default: module.AdventureSkillSelection })));
+
+export { LoadingFallback };
